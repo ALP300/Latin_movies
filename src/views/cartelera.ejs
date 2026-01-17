@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - Latin Movies
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gold: #FFD700;
+            --secondary-red: #E50914;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light-text: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--light-text);
+            background-color: var(--dark-bg);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.98), rgba(10, 10, 10, 0.85));
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .btn-tickets {
+            background: linear-gradient(135deg, var(--secondary-red), #b20710);
+            padding: 0.7rem 1.8rem;
+            border-radius: 25px;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(229, 9, 20, 0.4);
+        }
+
+        .page-header {
+            margin-top: 100px;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(229, 9, 20, 0.1), transparent);
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: rgba(245, 245, 245, 0.7);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: var(--light-text);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-gold), #FFA500);
+            color: var(--dark-bg);
+            border-color: var(--primary-gold);
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .movie-card {
+            background: var(--dark-card);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.3);
+            border-color: var(--primary-gold);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .movie-info {
+            padding: 1.5rem;
+        }
+
+        .movie-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            color: var(--primary-gold);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: rgba(245, 245, 245, 0.6);
+            flex-wrap: wrap;
+        }
+
+        .movie-description {
+            color: rgba(245, 245, 245, 0.8);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .showtimes {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .showtime-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(229, 9, 20, 0.2);
+            border: 1px solid var(--secondary-red);
+            color: var(--light-text);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .showtime-btn:hover {
+            background: var(--secondary-red);
+            transform: scale(1.05);
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--secondary-red), #b20710);
+            color: var(--light-text);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #050505, #1a0505);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .copyright {
+            color: rgba(245, 245, 245, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .movies-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">🎬 LATIN MOVIES</a>
+            <ul class="nav-links">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/cartelera">Cartelera</a></li>
+                <li><a href="/promociones">Promociones</a></li>
+                <li><a href="/about">Nosotros</a></li>
+                <li><a href="/login" class="btn-tickets">Entradas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1 class="page-title">Cartelera</h1>
+        <p class="page-subtitle">Todas las películas disponibles ahora</p>
+    </div>
+
+    <div class="container">
+        <div class="filter-bar">
+            <button class="filter-btn active">Todas</button>
+            <button class="filter-btn">Drama</button>
+            <button class="filter-btn">Comedia</button>
+            <button class="filter-btn">Acción</button>
+            <button class="filter-btn">Romance</button>
+            <button class="filter-btn">Documental</button>
+        </div>
+
+        <div class="movies-grid">
+            <div class="movie-card">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600" alt="Sueños de Libertad"
+                    class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Sueños de Libertad</h3>
+                    <div class="movie-meta">
+                        <span>⭐ 4.5/5</span>
+                        <span>🎭 Drama</span>
+                        <span>⏱️ 120 min</span>
+                        <span>🔞 +13</span>
+                    </div>
+                    <p class="movie-description">
+                        Una emotiva historia sobre la lucha por la libertad en tiempos de adversidad.
+                    </p>
+                    <div class="showtimes">
+                        <button class="showtime-btn">14:00</button>
+                        <button class="showtime-btn">17:30</button>
+                        <button class="showtime-btn">20:00</button>
+                        <button class="showtime-btn">22:30</button>
+                    </div>
+                    <button class="buy-btn">Comprar Entradas</button>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <img src="https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=600" alt="Ritmos del Alma"
+                    class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Ritmos del Alma</h3>
+                    <div class="movie-meta">
+                        <span>⭐ 4.8/5</span>
+                        <span>🎭 Musical</span>
+                        <span>⏱️ 105 min</span>
+                        <span>🔞 ATP</span>
+                    </div>
+                    <p class="movie-description">
+                        Un viaje musical a través de las tradiciones y culturas de Latinoamérica.
+                    </p>
+                    <div class="showtimes">
+                        <button class="showtime-btn">15:00</button>
+                        <button class="showtime-btn">18:00</button>
+                        <button class="showtime-btn">21:00</button>
+                    </div>
+                    <button class="buy-btn">Comprar Entradas</button>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600" alt="Horizontes Perdidos"
+                    class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Horizontes Perdidos</h3>
+                    <div class="movie-meta">
+                        <span>⭐ 4.6/5</span>
+                        <span>🎭 Aventura</span>
+                        <span>⏱️ 135 min</span>
+                        <span>🔞 +16</span>
+                    </div>
+                    <p class="movie-description">
+                        Una épica aventura por los paisajes más impresionantes de América Latina.
+                    </p>
+                    <div class="showtimes">
+                        <button class="showtime-btn">13:30</button>
+                        <button class="showtime-btn">16:30</button>
+                        <button class="showtime-btn">19:30</button>
+                        <button class="showtime-btn">22:00</button>
+                    </div>
+                    <button class="buy-btn">Comprar Entradas</button>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600" alt="La Casa del Tiempo"
+                    class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">La Casa del Tiempo</h3>
+                    <div class="movie-meta">
+                        <span>⭐ 4.3/5</span>
+                        <span>🎭 Thriller</span>
+                        <span>⏱️ 98 min</span>
+                        <span>🔞 +18</span>
+                    </div>
+                    <p class="movie-description">
+                        Un misterio psicológico que desafía la percepción del tiempo y la realidad.
+                    </p>
+                    <div class="showtimes">
+                        <button class="showtime-btn">16:00</button>
+                        <button class="showtime-btn">19:00</button>
+                        <button class="showtime-btn">22:30</button>
+                    </div>
+                    <button class="buy-btn">Comprar Entradas</button>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <img src="https://images.unsplash.com/photo-1574267432644-f74f8ec55d1f?w=600"
+                    alt="Amor en Tiempos Modernos" class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Amor en Tiempos Modernos</h3>
+                    <div class="movie-meta">
+                        <span>⭐ 4.7/5</span>
+                        <span>🎭 Romance</span>
+                        <span>⏱️ 110 min</span>
+                        <span>🔞 +13</span>
+                    </div>
+                    <p class="movie-description">
+                        Una comedia romántica que explora las relaciones en la era digital.
+                    </p>
+                    <div class="showtimes">
+                        <button class="showtime-btn">14:30</button>
+                        <button class="showtime-btn">17:00</button>
+                        <button class="showtime-btn">20:30</button>
+                    </div>
+                    <button class="buy-btn">Comprar Entradas</button>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600" alt="Raíces"
+                    class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Raíces</h3>
+                    <div class="movie-meta">
+                        <span>⭐ 4.9/5</span>
+                        <span>🎭 Documental</span>
+                        <span>⏱️ 95 min</span>
+                        <span>🔞 ATP</span>
+                    </div>
+                    <p class="movie-description">
+                        Un viaje documental por las tradiciones ancestrales de América Latina.
+                    </p>
+                    <div class="showtimes">
+                        <button class="showtime-btn">15:30</button>
+                        <button class="showtime-btn">18:30</button>
+                        <button class="showtime-btn">21:30</button>
+                    </div>
+                    <button class="buy-btn">Comprar Entradas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2026 Latin Movies Cinema. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

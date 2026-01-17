@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - Latin Movies
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gold: #FFD700;
+            --secondary-red: #E50914;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light-text: #f5f5f5;
+            --accent-green: #10B981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--light-text);
+            background-color: var(--dark-bg);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.98), rgba(10, 10, 10, 0.85));
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .btn-tickets {
+            background: linear-gradient(135deg, var(--secondary-red), #b20710);
+            padding: 0.7rem 1.8rem;
+            border-radius: 25px;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(229, 9, 20, 0.4);
+        }
+
+        .page-header {
+            margin-top: 80px;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(229, 9, 20, 0.2), transparent);
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.4rem;
+            color: rgba(245, 245, 245, 0.7);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .promo-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(229, 9, 20, 0.1));
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .promo-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .promo-card:hover::before {
+            opacity: 1;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.4);
+        }
+
+        .promo-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--secondary-red);
+            color: var(--light-text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.5);
+        }
+
+        .promo-badge.new {
+            background: var(--accent-green);
+        }
+
+        .promo-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .promo-content {
+            padding: 2rem;
+        }
+
+        .promo-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .promo-description {
+            color: rgba(245, 245, 245, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .promo-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .promo-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: rgba(245, 245, 245, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .promo-detail-icon {
+            font-size: 1.2rem;
+        }
+
+        .promo-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .promo-price .old-price {
+            font-size: 1.5rem;
+            color: rgba(245, 245, 245, 0.4);
+            text-decoration: line-through;
+            margin-right: 1rem;
+        }
+
+        .promo-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--secondary-red), #b20710);
+            color: var(--light-text);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .promo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.6);
+        }
+
+        .special-section {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(139, 92, 246, 0.1));
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 4rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            text-align: center;
+        }
+
+        .special-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .special-description {
+            font-size: 1.2rem;
+            color: rgba(245, 245, 245, 0.8);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .special-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--primary-gold), #FFA500);
+            color: var(--dark-bg);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .special-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #050505, #1a0505);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .copyright {
+            color: rgba(245, 245, 245, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 3rem;
+            }
+
+            .promo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">🎬 LATIN MOVIES</a>
+            <ul class="nav-links">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/cartelera">Cartelera</a></li>
+                <li><a href="/promociones">Promociones</a></li>
+                <li><a href="/about">Nosotros</a></li>
+                <li><a href="/login" class="btn-tickets">Entradas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1 class="page-title">Promociones Especiales</h1>
+        <p class="page-subtitle">Aprovecha nuestras ofertas exclusivas y ahorra en tus entradas</p>
+    </div>
+
+    <div class="container">
+        <div class="promo-grid">
+            <div class="promo-card">
+                <span class="promo-badge">Hot</span>
+                <img src="https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?w=600" alt="Martes de Cine"
+                    class="promo-image">
+                <div class="promo-content">
+                    <h3 class="promo-title">Martes de Cine</h3>
+                    <p class="promo-description">
+                        Todos los martes disfruta de cualquier película con un descuento especial.
+                        ¡La mejor forma de empezar la semana!
+                    </p>
+                    <div class="promo-details">
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">📅</span>
+                            <span>Válido todos los martes</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🎟️</span>
+                            <span>Todas las funciones</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">⏰</span>
+                            <span>Todo el día</span>
+                        </div>
+                    </div>
+                    <div class="promo-price">
+                        <span class="old-price">$12.00</span>
+                        $7.99
+                    </div>
+                    <button class="promo-btn">Comprar Ahora</button>
+                </div>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-badge new">Nuevo</span>
+                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600" alt="Pack Familiar"
+                    class="promo-image">
+                <div class="promo-content">
+                    <h3 class="promo-title">Pack Familiar</h3>
+                    <p class="promo-description">
+                        4 entradas + 2 combos grandes de palomitas y bebida. Perfecto para disfrutar
+                        en familia del mejor cine latinoamericano.
+                    </p>
+                    <div class="promo-details">
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">👨‍👩‍👧‍👦</span>
+                            <span>4 entradas incluidas</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🍿</span>
+                            <span>2 combos grandes</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">💰</span>
+                            <span>Ahorra hasta 40%</span>
+                        </div>
+                    </div>
+                    <div class="promo-price">
+                        <span class="old-price">$65.00</span>
+                        $39.99
+                    </div>
+                    <button class="promo-btn">Comprar Ahora</button>
+                </div>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-badge">Popular</span>
+                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600" alt="Estudiantes"
+                    class="promo-image">
+                <div class="promo-content">
+                    <h3 class="promo-title">Descuento Estudiantes</h3>
+                    <p class="promo-description">
+                        Presentando tu carnet de estudiante vigente, obtén un descuento especial
+                        en todas tus entradas de lunes a jueves.
+                    </p>
+                    <div class="promo-details">
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🎓</span>
+                            <span>Carnet vigente requerido</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">📅</span>
+                            <span>Lunes a Jueves</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🎬</span>
+                            <span>Todas las películas</span>
+                        </div>
+                    </div>
+                    <div class="promo-price">
+                        <span class="old-price">$12.00</span>
+                        $8.50
+                    </div>
+                    <button class="promo-btn">Comprar Ahora</button>
+                </div>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-badge">Hot</span>
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600" alt="Matinée"
+                    class="promo-image">
+                <div class="promo-content">
+                    <h3 class="promo-title">Matinée Especial</h3>
+                    <p class="promo-description">
+                        Funciones antes de las 3:00 PM con precio reducido. Ideal para disfrutar
+                        del cine en horarios más tranquilos.
+                    </p>
+                    <div class="promo-details">
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🌅</span>
+                            <span>Antes de las 3:00 PM</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">📅</span>
+                            <span>Todos los días</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🎫</span>
+                            <span>Funciones seleccionadas</span>
+                        </div>
+                    </div>
+                    <div class="promo-price">
+                        <span class="old-price">$12.00</span>
+                        $6.99
+                    </div>
+                    <button class="promo-btn">Comprar Ahora</button>
+                </div>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-badge new">Nuevo</span>
+                <img src="https://images.unsplash.com/photo-1574267432644-f74f8ec55d1f?w=600" alt="Noche de Parejas"
+                    class="promo-image">
+                <div class="promo-content">
+                    <h3 class="promo-title">Noche de Parejas</h3>
+                    <p class="promo-description">
+                        Todos los viernes, 2 entradas + combo romántico especial. La cita perfecta
+                        para disfrutar del mejor cine latinoamericano.
+                    </p>
+                    <div class="promo-details">
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">💑</span>
+                            <span>2 entradas incluidas</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🍿</span>
+                            <span>Combo romántico</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">📅</span>
+                            <span>Solo viernes</span>
+                        </div>
+                    </div>
+                    <div class="promo-price">
+                        <span class="old-price">$32.00</span>
+                        $24.99
+                    </div>
+                    <button class="promo-btn">Comprar Ahora</button>
+                </div>
+            </div>
+
+            <div class="promo-card">
+                <span class="promo-badge">Exclusivo</span>
+                <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600" alt="Membresía Anual"
+                    class="promo-image">
+                <div class="promo-content">
+                    <h3 class="promo-title">Membresía Anual</h3>
+                    <p class="promo-description">
+                        Acceso ilimitado durante todo el año, descuentos en snacks, preventa
+                        exclusiva y eventos especiales. ¡El mejor valor!
+                    </p>
+                    <div class="promo-details">
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🎬</span>
+                            <span>Películas ilimitadas</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">🍿</span>
+                            <span>20% descuento en snacks</span>
+                        </div>
+                        <div class="promo-detail">
+                            <span class="promo-detail-icon">⭐</span>
+                            <span>Eventos exclusivos</span>
+                        </div>
+                    </div>
+                    <div class="promo-price">
+                        $199.99/año
+                    </div>
+                    <button class="promo-btn">Suscribirse</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="special-section">
+            <h2 class="special-title">¿Buscas algo más?</h2>
+            <p class="special-description">
+                Suscríbete a nuestro newsletter y recibe promociones exclusivas, estrenos anticipados
+                y contenido especial sobre el cine latinoamericano directamente en tu correo.
+            </p>
+            <a href="#" class="special-btn">Suscribirme Ahora</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2026 Latin Movies Cinema. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

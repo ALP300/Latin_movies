@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Latin Movies - Tu cine de películas latinoamericanas">
+    <title>Latin Movies - Cine Latinoamericano</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gold: #FFD700;
+            --secondary-red: #E50914;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light-text: #f5f5f5;
+            --accent-purple: #8B5CF6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--light-text);
+            background-color: var(--dark-bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.98), rgba(10, 10, 10, 0.85));
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .btn-tickets {
+            background: linear-gradient(135deg, var(--secondary-red), #b20710);
+            padding: 0.7rem 1.8rem;
+            border-radius: 25px;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(229, 9, 20, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-tickets:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            height: 95vh;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8), rgba(229, 9, 20, 0.3)),
+                url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1920') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 10, 10, 0.9) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-gold), #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px;
+            text-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: rgba(245, 245, 245, 0.95);
+            font-weight: 300;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: rgba(245, 245, 245, 0.7);
+            font-style: italic;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--secondary-red), #b20710);
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(229, 9, 20, 0.7);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--primary-gold);
+            color: var(--dark-bg);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Now Playing Section */
+        .now-playing {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--dark-bg), #1a0a0a);
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(245, 245, 245, 0.7);
+            margin-bottom: 4rem;
+            font-size: 1.2rem;
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .movie-card {
+            background: var(--dark-card);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            position: relative;
+        }
+
+        .movie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(229, 9, 20, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .movie-card:hover::before {
+            opacity: 1;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.3);
+            border-color: var(--primary-gold);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .movie-info {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .movie-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-gold);
+            letter-spacing: 1px;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: rgba(245, 245, 245, 0.6);
+        }
+
+        .movie-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .movie-description {
+            color: rgba(245, 245, 245, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .movie-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, var(--secondary-red), #b20710);
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .movie-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--dark-bg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(139, 92, 246, 0.1));
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+            border-color: var(--accent-purple);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+        }
+
+        .feature-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-gold);
+            letter-spacing: 1px;
+        }
+
+        .feature-card p {
+            color: rgba(245, 245, 245, 0.8);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #050505, #1a0505);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(245, 245, 245, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-gold);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            padding-top: 2rem;
+            color: rgba(245, 245, 245, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .movies-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">🎬 LATIN MOVIES</div>
+            <ul class="nav-links">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/cartelera">Cartelera</a></li>
+                <li><a href="/promociones">Promociones</a></li>
+                <li><a href="/about">Nosotros</a></li>
+                <li><a href="/login" class="btn-tickets">Entradas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>LATIN MOVIES</h1>
+            <p class="subtitle">El Cine Latinoamericano en su Máxima Expresión</p>
+            <p class="tagline">Historias que conectan, emociones que trascienden fronteras</p>
+            <div class="cta-buttons">
+                <a href="/cartelera" class="cta-button">Ver Cartelera</a>
+                <a href="/promociones" class="cta-button secondary">Promociones</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Now Playing Section -->
+    <section class="now-playing">
+        <div class="section-container">
+            <h2 class="section-title">En Cartelera Ahora</h2>
+            <p class="section-subtitle">Las mejores películas latinoamericanas en pantalla grande</p>
+            <div class="movies-grid">
+                <div class="movie-card">
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600" alt="Película 1"
+                        class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Sueños de Libertad</h3>
+                        <div class="movie-meta">
+                            <span>⭐ 4.5/5</span>
+                            <span>🎭 Drama</span>
+                            <span>⏱️ 120 min</span>
+                        </div>
+                        <p class="movie-description">
+                            Una emotiva historia sobre la lucha por la libertad en tiempos de adversidad.
+                        </p>
+                        <a href="/cartelera" class="movie-btn">Comprar Entradas</a>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <img src="https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=600" alt="Película 2"
+                        class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Ritmos del Alma</h3>
+                        <div class="movie-meta">
+                            <span>⭐ 4.8/5</span>
+                            <span>🎭 Musical</span>
+                            <span>⏱️ 105 min</span>
+                        </div>
+                        <p class="movie-description">
+                            Un viaje musical a través de las tradiciones y culturas de Latinoamérica.
+                        </p>
+                        <a href="/cartelera" class="movie-btn">Comprar Entradas</a>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600" alt="Película 3"
+                        class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Horizontes Perdidos</h3>
+                        <div class="movie-meta">
+                            <span>⭐ 4.6/5</span>
+                            <span>🎭 Aventura</span>
+                            <span>⏱️ 135 min</span>
+                        </div>
+                        <p class="movie-description">
+                            Una épica aventura por los paisajes más impresionantes de América Latina.
+                        </p>
+                        <a href="/cartelera" class="movie-btn">Comprar Entradas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-container">
+            <h2 class="section-title">La Experiencia Latin Movies</h2>
+            <p class="section-subtitle">Más que un cine, una celebración de nuestra cultura</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎥</div>
+                    <h3>Cine de Calidad</h3>
+                    <p>Pantallas de última generación con tecnología 4K y sonido envolvente Dolby Atmos</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌎</div>
+                    <h3>Cultura Latina</h3>
+                    <p>Exclusivamente películas latinoamericanas que celebran nuestra identidad y talento</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🍿</div>
+                    <h3>Experiencia Completa</h3>
+                    <p>Snacks tradicionales y asientos premium para tu máximo confort</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-section">
+                    <h4>Ubicación</h4>
+                    <p>Av. Principal 456</p>
+                    <p>Centro Comercial Plaza</p>
+                    <p>Ciudad, País 12345</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Horarios</h4>
+                    <p>Lunes - Jueves: 14:00 - 23:00</p>
+                    <p>Viernes - Domingo: 12:00 - 01:00</p>
+                    <p>Funciones especiales consultar</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <a href="tel:+1234567890">+1 (234) 567-890</a>
+                    <a href="mailto:info@latinmovies.com">info@latinmovies.com</a>
+                    <a href="/cartelera">Comprar Entradas</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Latin Movies Cinema. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

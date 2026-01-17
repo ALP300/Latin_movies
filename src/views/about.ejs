@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - Latin Movies
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gold: #FFD700;
+            --secondary-red: #E50914;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light-text: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--light-text);
+            background-color: var(--dark-bg);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.98), rgba(10, 10, 10, 0.85));
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .btn-tickets {
+            background: linear-gradient(135deg, var(--secondary-red), #b20710);
+            padding: 0.7rem 1.8rem;
+            border-radius: 25px;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(229, 9, 20, 0.4);
+        }
+
+        .hero-about {
+            margin-top: 80px;
+            height: 60vh;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8), rgba(229, 9, 20, 0.3)),
+                url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1920') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, var(--primary-gold), #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(245, 245, 245, 0.8);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content {
+            color: rgba(245, 245, 245, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(245, 245, 245, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(139, 92, 246, 0.1));
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .value-description {
+            color: rgba(245, 245, 245, 0.8);
+            line-height: 1.6;
+        }
+
+        .team-section {
+            background: rgba(26, 26, 26, 0.5);
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #050505, #1a0505);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .copyright {
+            color: rgba(245, 245, 245, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">🎬 LATIN MOVIES</a>
+            <ul class="nav-links">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/cartelera">Cartelera</a></li>
+                <li><a href="/promociones">Promociones</a></li>
+                <li><a href="/about">Nosotros</a></li>
+                <li><a href="/login" class="btn-tickets">Entradas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero-about">
+        <div class="hero-content">
+            <h1 class="hero-title">Sobre Nosotros</h1>
+            <p class="hero-subtitle">Celebrando el cine latinoamericano desde 2010</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="section">
+            <h2 class="section-title">Nuestra Historia</h2>
+            <p class="section-content">
+                Latin Movies nació en 2010 con una visión clara: crear un espacio dedicado exclusivamente
+                al cine latinoamericano. Desde entonces, nos hemos convertido en el hogar de las mejores
+                producciones de Argentina, México, Colombia, Chile, Perú y toda América Latina.
+            </p>
+            <p class="section-content">
+                Creemos que el cine es más que entretenimiento; es cultura, identidad y memoria. Por eso,
+                cada película que proyectamos es cuidadosamente seleccionada para ofrecer a nuestro público
+                historias auténticas que reflejan la diversidad y riqueza de nuestra región.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">14</div>
+                    <div class="stat-label">Años de experiencia</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Películas proyectadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Espectadores felices</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Salas de cine</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Nuestra Misión</h2>
+            <p class="section-content">
+                Promover y difundir el cine latinoamericano, ofreciendo una experiencia cinematográfica
+                de primera clase que conecte a las audiencias con las historias, culturas y talentos de
+                nuestra región. Nos comprometemos a ser un puente entre los creadores y el público,
+                celebrando la diversidad y excelencia del séptimo arte latinoamericano.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Nuestros Valores</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎬</div>
+                    <h3 class="value-title">Calidad</h3>
+                    <p class="value-description">
+                        Seleccionamos cuidadosamente cada película para garantizar contenido de la más
+                        alta calidad artística y técnica.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌎</div>
+                    <h3 class="value-title">Identidad Cultural</h3>
+                    <p class="value-description">
+                        Celebramos y promovemos la rica diversidad cultural de América Latina a través
+                        del cine.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">❤️</div>
+                    <h3 class="value-title">Pasión</h3>
+                    <p class="value-description">
+                        Amamos el cine y nos apasiona compartir esta experiencia con nuestro público.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3 class="value-title">Comunidad</h3>
+                    <p class="value-description">
+                        Creamos un espacio de encuentro donde la comunidad puede conectarse a través
+                        del arte cinematográfico.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section team-section">
+            <h2 class="section-title">Nuestro Equipo</h2>
+            <p class="section-content">
+                Detrás de Latin Movies hay un equipo apasionado de profesionales del cine, desde
+                programadores culturales hasta técnicos especializados, todos comprometidos con
+                ofrecer la mejor experiencia cinematográfica. Trabajamos día a día para traer las
+                mejores películas latinoamericanas a nuestras pantallas.
+            </p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2026 Latin Movies Cinema. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
