@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import { conectar } from "./config/database.js";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -16,6 +17,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.json());
+app.use(cors());
 
 // Usar las rutas
 app.use("/", router);
